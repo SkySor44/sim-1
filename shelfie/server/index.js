@@ -13,7 +13,8 @@ app.use(cors());
 
 app.get('/api/inventory', myController.getInventory);
 app.post('/api/product', myController.createProduct);
-
+app.delete('/api/product/:id', myController.deleteProduct)
+app.put('/api/product/:id', myController.updateProduct);
 
 
 

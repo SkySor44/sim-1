@@ -10,9 +10,11 @@ class App extends Component {
   constructor(){
     super()
     this.state = {
-      inventory: []
+      inventory: [],
+      currProduct: {}
     }
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.updateCurrProduct = this.updateCurrProduct.bind(this);
   }
 
   componentDidMount(){
@@ -20,18 +22,28 @@ class App extends Component {
     this.setState({
         inventory: res.data
       })
-    console.log(this.state.inventory)
     })
   }
 
+  updateCurrProduct(id, name, price, imgurl){
+    const newProd = {
+      id: id,
+      name: name, 
+      price: price,
+      imgurl: imgurl
+    }
+    this.setState({
+      currProduct: newProd
+    })
+  }
   
  
   render() {
     return (
       <div className="App">
         <Header />
-        <Form componentDidMountFn = {this.componentDidMount}/>
-        <Dashboard inventoryList = {this.state.inventory}/>
+        <Form componentDidMountFn = {this.componentDidMount} currentProduct = {this.state.currProduct}/>
+        <Dashboard inventoryList = {this.state.inventory} componentDidMountFn = {this.componentDidMount} updateCurrProductFn = {this.updateCurrProduct}/>
       </div>
     );
   }
