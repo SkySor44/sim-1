@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from 'axios';
 
 export default class Form extends Component{
     constructor(){
@@ -37,6 +38,18 @@ export default class Form extends Component{
     }
 
     addNewProduct(){
+        const {name, price, imgurl} = this.state;
+        const {componentDidMountFn} = this.props;
+        var newProd = {
+            name: name,
+            price: price,
+            imgurl: imgurl
+        }
+        axios.post('http://localhost:4000/api/product', newProd).then(res => {
+            componentDidMountFn();
+            console.log(this.state.imgurl)
+            this.cancelBtn();
+        })
         
     }
     
@@ -55,7 +68,7 @@ export default class Form extends Component{
 
                 <button onClick = {() => this.cancelBtn()}>Cancel</button>
 
-                <button>Add to Inventory</button>
+                <button onClick = {() => this.addNewProduct()}>Add to Inventory</button>
             </div>
         )
     }
